@@ -1,3 +1,4 @@
+/* <><><><><><><>  IMPORTS (NOT TAXED)  <><><><><><><> */
 import { InputHandler } from './input.js';
 import { Player } from './player.js';
 import { Enemy, Demon } from './enemy.js';
@@ -19,12 +20,12 @@ class Game {
         this.width = width;
         this.height = height;
         this.player = new Player(this);
-        this.input = new InputHandler();
+        this.input = new InputHandler(this);
         this.enemy = new Demon(this);
     }
     update() {
         this.player.update(this.input.keysPressed);
-        this.enemy.update(this.player);
+        this.enemy.update(this.player, this.input);
     }
     render(context) {
         this.player.render(context);
@@ -35,8 +36,6 @@ class Game {
 }
 const game = new Game(canvas.width, canvas.height);
 /* <><><><><><><>       FUNCTIONS       <><><><><><><> */
-/* <><><><><><><>    EVENT LISTENERS    <><><><><><><> */
-
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     game.update();

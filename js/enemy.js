@@ -25,7 +25,7 @@ export class Demon extends Enemy {
         this.speedEnemy = 0.5;
         
     }
-    update(player) {
+    update(player, input) {
     if (this.game.input.keyToggle === true) {
         if (player.x+5 > this.x) {
             this.x += this.speedEnemy;
@@ -37,6 +37,20 @@ export class Demon extends Enemy {
             this.x -= this.speedEnemy;
         }
         if (player.y+10 < this.y) {
+            this.y -= this.speedEnemy;
+        }
+    }
+    if (this.game.input.keyToggle === false && input.playerPosition) {
+        if (input.playerPosition[0]+5 > this.x) {
+            this.x += this.speedEnemy;
+        }
+        if (input.playerPosition[1]+10 > this.y) {
+            this.y += this.speedEnemy;
+        }
+        if (input.playerPosition[0]+5 < this.x) {
+            this.x -= this.speedEnemy;
+        }
+        if (input.playerPosition[1]+10 < this.y) {
             this.y -= this.speedEnemy;
         }
     }
