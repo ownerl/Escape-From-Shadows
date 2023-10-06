@@ -13,6 +13,8 @@ After the grace period, an enemy will spawn somewhere on the map (a set minimum 
 
 ## Wireframes
 
+![Escape From Shadows Wireframe Mockup](images/wireframe.png)
+
 ## MVP Goals
 - Complete map
 - Render lantern lighting effect
