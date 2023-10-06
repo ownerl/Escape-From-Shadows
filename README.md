@@ -34,3 +34,7 @@ After the grace period, an enemy will spawn somewhere on the map (a set minimum 
 - Map randomization - player/enemy spawn, object/key placement, escape placement, hazard placement
 - Music and sound effects
 - More detailed art
+
+## Potential Roadblocks
+- Learning new canvas technologies
+- Layering canvas elements
