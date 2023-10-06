@@ -7,35 +7,45 @@ export class Player {
         this.height = 50;
         this.x = 200;
         this.y = 200;
+        this.lanternX = 0;
+        this.lanternY = 0;
     }
-    update(currentlyPressedKeys) {
+    update(keysPressed) {
         // Translating registered key inputs to movement
         const diagonalMultiplier = 0.7;
         const speed = 2;
-        if (currentlyPressedKeys.includes('w')) {
+        if (this.game.input.keyToggle === true) {
+            this.lanternX = 200;
+            this.lanternY = 200;
+        }
+        if (this.game.input.keyToggle === false) {
+            this.lanternX = 0;
+            this.lanternY = 0;
+        }
+        if (keysPressed.includes('w')) {
             let isDiagonal = false;
-            if (currentlyPressedKeys.includes('a') || currentlyPressedKeys.includes('d')){
+            if (keysPressed.includes('a') || keysPressed.includes('d')){
                 isDiagonal = true;
             }
             this.y -= isDiagonal ? speed * diagonalMultiplier : speed;
         }
-        if (currentlyPressedKeys.includes('s')) {
+        if (keysPressed.includes('s')) {
             let isDiagonal = false;
-            if (currentlyPressedKeys.includes('a') || currentlyPressedKeys.includes('d')){
+            if (keysPressed.includes('a') || keysPressed.includes('d')){
                 isDiagonal = true;
             }
             this.y += isDiagonal ? speed * diagonalMultiplier : speed;;
         }
-        if (currentlyPressedKeys.includes('d')) {
+        if (keysPressed.includes('d')) {
             let isDiagonal = false;
-            if (currentlyPressedKeys.includes('w') || currentlyPressedKeys.includes('s')){
+            if (keysPressed.includes('w') || keysPressed.includes('s')){
                 isDiagonal = true;
             }
             this.x += isDiagonal ? speed * diagonalMultiplier : speed;;
         }
-        if (currentlyPressedKeys.includes('a')) {
+        if (keysPressed.includes('a')) {
             let isDiagonal = false;
-            if (currentlyPressedKeys.includes('w') || currentlyPressedKeys.includes('s')){
+            if (keysPressed.includes('w') || keysPressed.includes('s')){
                 isDiagonal = true;
             }
             this.x -= isDiagonal ? speed * diagonalMultiplier : speed;;
@@ -46,10 +56,26 @@ export class Player {
         // Set vertical boundaries
         if (this.y < 0) this.y = 0;
         if (this.y > this.game.height - this.height) this.y = this.game.height - this.height;
-        console.log(currentlyPressedKeys)
+        // Turn lantern on or off
     }
     render(context) {
+        context.fillStyle = 'yellow';
+        context.fillRect(this.x - 85, this.y - 75, this.lanternX, this.lanternY);
         context.fillStyle = 'blue';
         context.fillRect(this.x, this.y, this.width, this.height);
+        console.log(this.keyToggle)
+
     }
 }
+
+
+
+
+// if (keyToggle.includes('f')) {
+//     // this.lantern = this.lantern === true ? false : true;
+//     if (this.lantern === true) {
+//         this.lantern = false;
+//     } else {
+//         this.lantern = true;
+//     }
+// }

@@ -1,5 +1,6 @@
 import { InputHandler } from './input.js';
-import { Player } from './player.js'
+import { Player } from './player.js';
+import { Enemy, Demon } from './enemy.js';
 
 /* <><><><><><><>      DOM SELECTORS    <><><><><><><> */
 const canvas = document.querySelector('#canvas1');
@@ -19,12 +20,15 @@ class Game {
         this.height = height;
         this.player = new Player(this);
         this.input = new InputHandler();
+        this.enemy = new Demon(this);
     }
     update() {
         this.player.update(this.input.keysPressed);
+        this.enemy.update(this.player);
     }
     render(context) {
         this.player.render(context);
+        this.enemy.render(context);
 
     }
 
