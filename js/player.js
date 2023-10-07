@@ -14,6 +14,7 @@ export class Player {
         // Translating registered key inputs to movement
         const diagonalMultiplier = 0.7;
         const speed = 2;
+        // Turn lantern on or off
         if (this.game.input.keyToggle === true) {
             this.lanternX = 200;
             this.lanternY = 200;
@@ -22,6 +23,7 @@ export class Player {
             this.lanternX = 0;
             this.lanternY = 0;
         }
+        // Movement inputs
         if (keysPressed.includes('w')) {
             let isDiagonal = false;
             if (keysPressed.includes('a') || keysPressed.includes('d')){
@@ -56,7 +58,7 @@ export class Player {
         // Set vertical boundaries
         if (this.y < 0) this.y = 0;
         if (this.y > this.game.height - this.height) this.y = this.game.height - this.height;
-        // Turn lantern on or off
+
     }
     render(context) {
         context.fillStyle = 'yellow';
@@ -64,7 +66,18 @@ export class Player {
         context.fillStyle = 'blue';
         context.fillRect(this.x, this.y, this.width, this.height);
         console.log(this.keyToggle)
-
+    }
+    collision() {
+        this.game.enemies.forEach(enemy => {
+            if (
+                enemy.x < this.x + this.width &&
+                enemy.x + enemy.width > this.x &&
+                enemy.y < this.y + this.height &&
+                enemy.y + enemy.height > this.y
+            ) {
+                this.game.playerIsAlive = false;
+            }
+        })
     }
 }
 

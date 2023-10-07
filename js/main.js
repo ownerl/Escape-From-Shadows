@@ -22,15 +22,25 @@ class Game {
         this.player = new Player(this);
         this.input = new InputHandler(this);
         this.enemy = new Demon(this);
+        this.enemy2 = new Demon(this);
+        this.playerIsAlive = true;
+        this.enemies = [this.enemy, this.enemy2];
     }
     update() {
-        this.player.update(this.input.keysPressed);
-        this.enemy.update(this.player, this.input);
+        if (this.playerIsAlive) {
+            this.player.update(this.input.keysPressed);
+        }
+        this.enemies.forEach((baddie) => baddie.update(this.player, this.input));
+        //this.enemy.update(this.player, this.input);
     }
     render(context) {
-        this.player.render(context);
-        this.enemy.render(context);
-
+        if (this.playerIsAlive) {
+            this.player.render(context);
+        }
+        this.enemies.forEach((baddie) => baddie.render(context));
+    }
+    collion() {
+        this.player.collision();
     }
 
 }
@@ -40,6 +50,7 @@ function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     game.update();
     game.render(ctx);
+    game.collion();
     requestAnimationFrame(animate);
 }
 animate();

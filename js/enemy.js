@@ -20,9 +20,9 @@ export class Demon extends Enemy {
         this.game = game;
         this.width = 20;
         this.height = 30;
-        this.x = 10;
-        this.y = 10;
-        this.speedEnemy = 0.5;
+        this.x = Math.random() * 500;
+        this.y = Math.random() * 500;
+        this.speedEnemy = (Math.random() * 0.3) + 0.5;
         
     }
     update(player, input) {
