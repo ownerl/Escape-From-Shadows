@@ -23,6 +23,8 @@ export class Demon extends Enemy {
         this.x = Math.random() * 500;
         this.y = Math.random() * 500;
         this.speedEnemy = (Math.random() * 0.3) + 0.5;
+        this.eyes = new Image();
+        this.eyes.src = '../images/red.png'
         
     }
     update(player, input) {
@@ -58,6 +60,7 @@ export class Demon extends Enemy {
     render(context, context3) {
         context.fillStyle = 'red';
         context.fillRect(this.x, this.y, this.width, this.height);
+        context3.drawImage(this.eyes, this.x, this.y, 30, 20);
         
     }
 }

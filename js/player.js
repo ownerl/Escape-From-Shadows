@@ -3,12 +3,14 @@
 export class Player {
     constructor(game) {
         this.game = game;
-        this.width = 30;
-        this.height = 50;
+        this.width = 60;
+        this.height = 80;
         this.x = 200;
         this.y = 200;
         this.lanternX = 0;
         this.lanternY = 0;
+        this.eyes = new Image();
+        this.eyes.src = '../images/googly.png'
     }
     update(keysPressed) {
         // Translating registered key inputs to movement
@@ -60,7 +62,7 @@ export class Player {
         if (this.y > this.game.height - this.height) this.y = this.game.height - this.height;
 
     }
-    render(context, context2) {
+    render(context, context2, context3) {
         // lantern
         context.fillStyle = 'yellow';
         context.fillRect(this.x - 85, this.y - 75, this.lanternX, this.lanternY);
@@ -68,6 +70,7 @@ export class Player {
         // player
         context.fillStyle = 'blue';
         context.fillRect(this.x, this.y, this.width, this.height);
+        context3.drawImage(this.eyes, this.x, this.y, 40, 40);
     }
     collision() {
         this.game.enemies.forEach(enemy => {

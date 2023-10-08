@@ -31,7 +31,7 @@ class Game {
     constructor(width, height) {
         this.width = width;
         this.height = height;
-        this.graceTimer = 10;
+        this.graceTimer = 1;
         this.gracePeriod = true;
         this.player = new Player(this);
         this.input = new InputHandler(this);
@@ -61,7 +61,7 @@ class Game {
 
 
         if (this.playerIsAlive) {
-            this.player.render(context, context2);
+            this.player.render(context, context2, context3);
         }
         if (this.gracePeriod === false) {
             this.enemies.forEach((baddie) => baddie.render(context, context3));
@@ -81,6 +81,7 @@ const game = new Game(canvas1.width, canvas1.height);
 function animate() {
     ctx2.fillRect(0, 0, canvas1.width, canvas1.height);
     ctx.clearRect(0, 0, canvas1.width, canvas1.height);
+    ctx3.clearRect(0, 0, canvas1.width, canvas1.height);
     game.update();
     game.render(ctx, ctx2, ctx3);
     game.collision();
