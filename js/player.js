@@ -3,14 +3,14 @@
 export class Player {
     constructor(game) {
         this.game = game;
-        this.width = 60;
-        this.height = 80;
+        this.width = 30;
+        this.height = 50;
         this.x = 200;
         this.y = 200;
         this.lanternX = 0;
         this.lanternY = 0;
         this.eyes = new Image();
-        this.eyes.src = '../images/googly.png'
+        this.eyes.src = '../images/googly.png';
     }
     update(keysPressed) {
         // Translating registered key inputs to movement
@@ -63,14 +63,24 @@ export class Player {
 
     }
     render(context, context2, context3) {
+        context2.fillRect(0, 0, 500, 500);
         // lantern
         context.fillStyle = 'yellow';
-        context.fillRect(this.x - 85, this.y - 75, this.lanternX, this.lanternY);
-        context2.clearRect(this.x - 85, this.y - 75, this.lanternX, this.lanternY);
+        context.fillRect(this.x - ((this.lanternX / 2) - (this.width / 2)), this.y - ((this.lanternY / 2) - (this.height / 2)), this.lanternX, this.lanternY);
+        
         // player
         context.fillStyle = 'blue';
         context.fillRect(this.x, this.y, this.width, this.height);
-        context3.drawImage(this.eyes, this.x, this.y, 40, 40);
+        // googly eyes
+        let eyes = [30, 40];
+        context3.drawImage(this.eyes, this.x + ((this.width / 2) - (eyes[0] / 2)), this.y, eyes[0], eyes[1]);
+        // clip
+        let circle = new Path2D();
+        context2.save();
+        circle.arc(this.x + this.width / 2, this.y + this.height / 2, this.lanternX/2, 0, Math.PI * 2);
+        context2.clip(circle);
+        context2.clearRect(0, 0, 500, 500);
+        context2.restore();
     }
     collision() {
         this.game.enemies.forEach(enemy => {

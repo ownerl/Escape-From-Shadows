@@ -31,7 +31,7 @@ class Game {
     constructor(width, height) {
         this.width = width;
         this.height = height;
-        this.graceTimer = 1;
+        this.graceTimer = 100;
         this.gracePeriod = true;
         this.player = new Player(this);
         this.input = new InputHandler(this);
@@ -79,7 +79,6 @@ class Game {
 const game = new Game(canvas1.width, canvas1.height);
 /* <><><><><><><>       FUNCTIONS       <><><><><><><> */
 function animate() {
-    ctx2.fillRect(0, 0, canvas1.width, canvas1.height);
     ctx.clearRect(0, 0, canvas1.width, canvas1.height);
     ctx3.clearRect(0, 0, canvas1.width, canvas1.height);
     game.update();
