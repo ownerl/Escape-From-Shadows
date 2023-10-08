@@ -60,9 +60,12 @@ export class Player {
         if (this.y > this.game.height - this.height) this.y = this.game.height - this.height;
 
     }
-    render(context) {
+    render(context, context2) {
+        // lantern
         context.fillStyle = 'yellow';
         context.fillRect(this.x - 85, this.y - 75, this.lanternX, this.lanternY);
+        context2.clearRect(this.x - 85, this.y - 75, this.lanternX, this.lanternY);
+        // player
         context.fillStyle = 'blue';
         context.fillRect(this.x, this.y, this.width, this.height);
     }
