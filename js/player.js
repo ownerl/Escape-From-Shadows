@@ -65,7 +65,6 @@ export class Player {
         context.fillRect(this.x - 85, this.y - 75, this.lanternX, this.lanternY);
         context.fillStyle = 'blue';
         context.fillRect(this.x, this.y, this.width, this.height);
-        console.log(this.keyToggle)
     }
     collision() {
         this.game.enemies.forEach(enemy => {
