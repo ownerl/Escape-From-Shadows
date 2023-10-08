@@ -32,12 +32,20 @@ export class Door {
     constructor(game) {
         this.game = game;
         this.width = 50;
-        this. width = 60;
+        this. height = 60;
         this.x = 400;
         this.y = 400;
     }
-    update() {
-
+    update(player) {
+        if (
+            this.game.keysCollected.length === 1 && 
+            player.x < this.x + this.width &&
+            player.x + player.width > this.x &&
+            player.y < this.y + this.height &&
+            player.y + player.height > this.y
+            ) {
+            this.game.win = true;
+        }
     }
     render(context) {
         context.fillStyle = 'purple';

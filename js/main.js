@@ -20,15 +20,17 @@ class Game {
     constructor(width, height) {
         this.width = width;
         this.height = height;
+        this.graceTimer = 10;
         this.player = new Player(this);
         this.input = new InputHandler(this);
         this.enemy = new Demon(this);
         this.greenKey = new KeyObject(this);
         this.escape = new Door(this);
-        this.enemy2 = new Demon(this);
-        this.playerIsAlive = true;
+        //this.enemy2 = new Demon(this);
+        this.enemies = [this.enemy];
         this.keysCollected = [];
-        this.enemies = [this.enemy, this.enemy2];
+        this.playerIsAlive = true;
+        this.win = false;
     }
     update() {
         if (this.playerIsAlive) {
@@ -36,6 +38,7 @@ class Game {
         }
         this.enemies.forEach((baddie) => baddie.update(this.player, this.input));
         this.greenKey.update(this.player, 'green');
+        this.escape.update(this.player);
     }
     render(context) {
         if (this.playerIsAlive) {
@@ -57,6 +60,15 @@ function animate() {
     game.update();
     game.render(ctx);
     game.collion();
-    requestAnimationFrame(animate);
+    if (!game.win) {
+        requestAnimationFrame(animate);
+    } else if (game.win) {
+        winScreen();
+    }
 }
+
+function winScreen() {
+    alert('you win this game')
+}
+
 animate();
