@@ -5,10 +5,6 @@ export class InputHandler {
         this.game = game;
         this.keysPressed = [];
         this.keyToggle = false;
-        this.toggles = {
-            'f': false,
-            'g': false
-        };
         this.playerPosition;
         window.addEventListener('keydown', e => {
             if (this.keysPressed.indexOf(e.key.toLowerCase()) === -1){
@@ -28,20 +24,5 @@ export class InputHandler {
                 this.playerPosition = [this.game.player.x, this.game.player.y];
             }
         })
-        // window.addEventListener('keyup', e => {
-        //     if (e.key === 'f') {
-        //         this.toggles['f'] = false;
-        //     }
-        // }, {once: true})
     }
 }
-
-
-// window.addEventListener('keyup', e => {
-//     // if (e.repeat) return;f
-//     if (this.keyToggle.indexOf(e.key.toLowerCase()) === -1) {
-//         this.keyToggle.push(e.key.toLowerCase());
-//     }
-//     if (this.keyToggle.includes(e.key.toLowerCase())){
-//         this.keyToggle.splice(this.keyToggle.indexOf(e.key.toLowerCase()), 1);
-//     }

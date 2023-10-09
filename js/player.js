@@ -5,17 +5,21 @@ export class Player {
         this.game = game;
         this.width = 30;
         this.height = 50;
-        this.x = 200;
-        this.y = 200;
+        this.x = 500;
+        this.y = 0;
         this.lanternX = 0;
         this.lanternY = 0;
         this.eyes = new Image();
         this.eyes.src = '../images/googly.png';
     }
-    update(keysPressed) {
+    update(keysPressed, trees) {
         // Translating registered key inputs to movement
         const diagonalMultiplier = 0.7;
-        const speed = 2;
+        const speed = 1;
+        const treeTopOffset = 145;
+        const treeBottomOffset = 140;
+        const treeRightOffset = 50;
+        const treeLeftOffset = 50;
         // Turn lantern on or off
         if (this.game.input.keyToggle === true) {
             this.lanternX = 200;
@@ -32,6 +36,16 @@ export class Player {
                 isDiagonal = true;
             }
             this.y -= isDiagonal ? speed * diagonalMultiplier : speed;
+            trees.forEach((tree) => {
+                if (
+                    this.x < tree.x + treeLeftOffset + tree.width && // left collision
+                    this.x + this.width > tree.x + treeRightOffset && // right collision
+                    this.y < tree.y + treeTopOffset + tree.height && // top collision
+                    this.y + this.height > tree.y + treeBottomOffset // bottom collision
+                    ) {
+                    this.y += isDiagonal ? speed * diagonalMultiplier : speed;
+                }
+            })
         }
         if (keysPressed.includes('s')) {
             let isDiagonal = false;
@@ -39,6 +53,16 @@ export class Player {
                 isDiagonal = true;
             }
             this.y += isDiagonal ? speed * diagonalMultiplier : speed;;
+            trees.forEach((tree) => {
+                if (
+                    this.x < tree.x + treeLeftOffset + tree.width && // left collision
+                    this.x + this.width > tree.x + treeRightOffset && // right collision
+                    this.y < tree.y + treeTopOffset + tree.height && // top collision
+                    this.y + this.height > tree.y + treeBottomOffset // bottom collision
+                    ) {
+                    this.y -= isDiagonal ? speed * diagonalMultiplier : speed;
+                }
+            })
         }
         if (keysPressed.includes('d')) {
             let isDiagonal = false;
@@ -46,6 +70,16 @@ export class Player {
                 isDiagonal = true;
             }
             this.x += isDiagonal ? speed * diagonalMultiplier : speed;;
+            trees.forEach((tree) => {
+                if (
+                    this.x < tree.x + treeLeftOffset + tree.width && // left collision
+                    this.x + this.width > tree.x + treeRightOffset && // right collision
+                    this.y < tree.y + treeTopOffset + tree.height && // top collision
+                    this.y + this.height > tree.y + treeBottomOffset // bottom collision
+                    ) {
+                    this.x -= isDiagonal ? speed * diagonalMultiplier : speed;
+                }
+            })
         }
         if (keysPressed.includes('a')) {
             let isDiagonal = false;
@@ -53,6 +87,16 @@ export class Player {
                 isDiagonal = true;
             }
             this.x -= isDiagonal ? speed * diagonalMultiplier : speed;;
+            trees.forEach((tree) => {
+                if (
+                    this.x < tree.x + treeLeftOffset + tree.width && // left collision
+                    this.x + this.width > tree.x + treeRightOffset && // right collision
+                    this.y < tree.y + treeTopOffset + tree.height && // top collision
+                    this.y + this.height > tree.y + treeBottomOffset // bottom collision
+                    ) {
+                    this.x += isDiagonal ? speed * diagonalMultiplier : speed;
+                }
+            })
         }
         // Set horizontal boundaries
         if (this.x < 0) this.x = 0;
@@ -60,26 +104,26 @@ export class Player {
         // Set vertical boundaries
         if (this.y < 0) this.y = 0;
         if (this.y > this.game.height - this.height) this.y = this.game.height - this.height;
+        // Set environmental obstacles
 
     }
     render(context, context2, context3) {
-        context2.fillRect(0, 0, 500, 500);
-        // lantern
-        context.fillStyle = 'yellow';
-        context.fillRect(this.x - ((this.lanternX / 2) - (this.width / 2)), this.y - ((this.lanternY / 2) - (this.height / 2)), this.lanternX, this.lanternY);
-        
+        // lantern lights
+        //context.fillStyle = 'yellow';
+        //context.fillRect(this.x - ((this.lanternX / 2) - (this.width / 2)), this.y - ((this.lanternY / 2) - (this.height / 2)), this.lanternX, this.lanternY);
+
         // player
         context.fillStyle = 'blue';
         context.fillRect(this.x, this.y, this.width, this.height);
         // googly eyes
         let eyes = [30, 40];
         context3.drawImage(this.eyes, this.x + ((this.width / 2) - (eyes[0] / 2)), this.y, eyes[0], eyes[1]);
-        // clip
+        // clip for lantern
         let circle = new Path2D();
         context2.save();
         circle.arc(this.x + this.width / 2, this.y + this.height / 2, this.lanternX/2, 0, Math.PI * 2);
         context2.clip(circle);
-        context2.clearRect(0, 0, 500, 500);
+        context2.clearRect(this.x - ((this.lanternX / 2) - (this.width / 2)), this.y - ((this.lanternY / 2) - (this.height / 2)), 200, 200);
         context2.restore();
     }
     collision() {
@@ -95,6 +139,12 @@ export class Player {
         })
     }
 }
+//             obstacles.x + obstacles.width > this.x &&
+//             obstacles.y < this.y + this.height &&
+//             obstacles.y + obstacles.height > this.y
+//         ) 
+//     }
+// }
 
 
 
@@ -106,4 +156,3 @@ export class Player {
 //     } else {
 //         this.lantern = true;
 //     }
-// }

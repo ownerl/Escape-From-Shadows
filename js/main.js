@@ -2,7 +2,7 @@
 import { InputHandler } from './input.js';
 import { Player } from './player.js';
 import { Enemy, Demon } from './enemy.js';
-import { KeyObject, Door } from './interactions.js';
+import { KeyObject, Door, Obstacle } from './interactions.js';
 
 /* <><><><><><><>      DOM SELECTORS    <><><><><><><> */
 const canvas1 = document.querySelector('#canvas1');
@@ -20,8 +20,8 @@ const ctx3 = canvas3.getContext('2d');
 //canvas1.setAttribute('height', getComputedStyle(canvas1).height);
 //canvas1.setAttribute('width', getComputedStyle(canvas1).width);
 
-canvas1.width = 500;
-canvas1.height = 500;
+canvas1.width = 1000;
+canvas1.height = 1000;
 canvas2.width = canvas1.width;
 canvas2.height = canvas1.height;
 canvas3.width = canvas1.width;
@@ -36,10 +36,21 @@ class Game {
         this.player = new Player(this);
         this.input = new InputHandler(this);
         this.enemy = new Demon(this);
+        // this.tree1 = new Obstacle();
+        // this.tree2 = new Obstacle();
+        // this.tree3 = new Obstacle();
+        // this.tree4 = new Obstacle();
+        // this.tree5 = new Obstacle();
+        // this.tree6 = new Obstacle();
+        //this.enemy2 = new Demon(this);
+        this.trees = [];
+        this.enemies = [this.enemy];
+        for (let i = 0; i < 20; i++) {
+            this.trees[i] = new Obstacle();
+        }
         this.greenKey = new KeyObject(this);
         this.escape = new Door(this);
-        //this.enemy2 = new Demon(this);
-        this.enemies = [this.enemy];
+        //this.trees = [this.tree1, this.tree2, this.tree3, this.tree4, this.tree5, this.tree6];
         this.keysCollected = [];
         this.playerIsAlive = true;
         this.win = false;
@@ -49,25 +60,24 @@ class Game {
     }
     update() {
         if (this.playerIsAlive) {
-            this.player.update(this.input.keysPressed);
+            this.player.update(this.input.keysPressed, this.trees);
         }
         if (this.gracePeriod === false) {
             this.enemies.forEach((baddie) => baddie.update(this.player, this.input));
         }
-        this.greenKey.update(this.player, 'green');
+        this.greenKey.update(this.player, 'green', this.trees);
         this.escape.update(this.player);
     }
     render(context, context2, context3) {
-
-
+        this.escape.render(context);
         if (this.playerIsAlive) {
             this.player.render(context, context2, context3);
         }
         if (this.gracePeriod === false) {
             this.enemies.forEach((baddie) => baddie.render(context, context3));
         }
+        this.trees.forEach((tree) => tree.render(context));
         this.greenKey.render(context, 'green');
-        this.escape.render(context);
     }
     collision() {
         if (this.gracePeriod === false) {
@@ -81,6 +91,7 @@ const game = new Game(canvas1.width, canvas1.height);
 function animate() {
     ctx.clearRect(0, 0, canvas1.width, canvas1.height);
     ctx3.clearRect(0, 0, canvas1.width, canvas1.height);
+    ctx2.fillRect(0, 0, canvas1.width, canvas1.height);
     game.update();
     game.render(ctx, ctx2, ctx3);
     game.collision();
