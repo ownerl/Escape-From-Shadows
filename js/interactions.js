@@ -3,14 +3,16 @@
 export class KeyObject {
     constructor(game) {
         this.game = game;
-        this.width = 20;
-        this.height = 20;
+        this.width = 30;
+        this.height = 17;
         this.treeTopOffset = this.game.player.treeTopOffset;
         this.treeBottomOffset = this.game.player.treeBottomOffset;
         this.treeRightOffset = this.game.player.treeRightOffset;
         this.treeLeftOffset = this.game.player.treeLeftOffset;
         this.x = 50 + Math.random() * 800;
         this.y = 50 + Math.random() * 800;
+        this.key = new Image();
+        this.key.src = '../images/key.png';
     }
     update(player, color, trees) {
         // respawn in accessible area
@@ -39,8 +41,9 @@ export class KeyObject {
         }
     }
     render(context, color) {
-        context.fillStyle = color;
-        context.fillRect(this.x, this.y, this.width, this.height);
+        context.drawImage(this.key, this.x, this.y, this.width, this.height);
+        // context.fillStyle = color;
+        // context.fillRect(this.x, this.y, this.width, this.height);
     }
 }
 

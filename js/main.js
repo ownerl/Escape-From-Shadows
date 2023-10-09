@@ -1,7 +1,7 @@
 /* <><><><><><><>  IMPORTS (NOT TAXED)  <><><><><><><> */
 import { InputHandler } from './input.js';
 import { Player } from './player.js';
-import { Enemy, Demon } from './enemy.js';
+import { Demon } from './enemy.js';
 import { KeyObject, Door, Obstacle } from './interactions.js';
 
 /* <><><><><><><>      DOM SELECTORS    <><><><><><><> */
