@@ -3,16 +3,20 @@
 export class KeyObject {
     constructor(game) {
         this.game = game;
-        this.width = 30;
-        this.height = 17;
+        this.width = 3;
+        this.height = 1.7;
         this.treeTopOffset = this.game.player.treeTopOffset;
         this.treeBottomOffset = this.game.player.treeBottomOffset;
         this.treeRightOffset = this.game.player.treeRightOffset;
         this.treeLeftOffset = this.game.player.treeLeftOffset;
-        this.x = 50 + Math.random() * 800;
-        this.y = 50 + Math.random() * 800;
+        this.x = 5 + Math.random() * 80;
+        this.y = 5 + Math.random() * 80;
         this.key = new Image();
         this.key.src = '../images/key.png';
+        this.width = (this.width / 100) * this.game.width;
+        this.height = (this.height / 100) * this.game.height;
+        this.x = (this.x / 100) * this.game.width;
+        this.y = (this.y / 100) * this.game.height;
     }
     update(player, color, trees) {
         // respawn in accessible area
@@ -50,18 +54,22 @@ export class KeyObject {
 export class Door {
     constructor(game) {
         this.game = game;
-        this.width = 60;
-        this.height = 60;
+        this.width = 6;
+        this.height = 6;
         this.randomSeed = Math.random() * 2;
         if (this.randomSeed < 1) {
-            this.x = Math.random() * 20;
-            this.y = Math.random() * 950;
+            this.x = Math.random() * 2;
+            this.y = Math.random() * 95;
         } else {
-            this.x = 920 + Math.random() * 20;
-            this.y = Math.random() * 950;
+            this.x = 92 + Math.random() * 2;
+            this.y = Math.random() * 95;
         }
         this.door = new Image();
         this.door.src = '../images/door.png';
+        this.width = (this.width / 100) * this.game.width;
+        this.height = (this.height / 100) * this.game.height;
+        this.x = (this.x / 100) * this.game.width;
+        this.y = (this.y / 100) * this.game.height;
     }
     update(player) {
         if (

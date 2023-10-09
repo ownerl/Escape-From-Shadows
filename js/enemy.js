@@ -1,30 +1,20 @@
 // Enemy object
 
-export class Enemy {
-    constructor() {
-        this.width = 0;
-        this.height = 0;
-        this.x = 0;
-        this.y = 0;
-    }
-    update() {
-        
-    }
-    render(context) {
-    }
-}
-
-export class Demon extends Enemy {
+export class Demon {
     constructor(game) {
-        super();
         this.game = game;
-        this.width = 20;
-        this.height = 30;
-        this.x = Math.random() * 500;
-        this.y = Math.random() * 500;
-        this.speedEnemy = (Math.random() * 0.3) + 0.3;
+        this.width = 2;
+        this.height = 3;
+        this.x = Math.random() * 100; // redo
+        this.y = Math.random() * 100; // redo
+        this.speedEnemy = (Math.random() * 0.3) + 0.5
         this.eyes = new Image();
         this.eyes.src = '../images/red.png'
+        // Scale to percentages of canvas size instead of pixels
+        this.width = (this.width / 100) * this.game.width;
+        this.height = (this.height / 100) * this.game.height;
+        this.x = (this.x / 100) * this.game.width;
+        this.y = (this.y / 100) * this.game.height;
         
     }
     update(player, input) {
@@ -60,7 +50,7 @@ export class Demon extends Enemy {
     render(context, context3) {
         context.fillStyle = 'red';
         context.fillRect(this.x, this.y, this.width, this.height);
-        let eyes = [30, 20];
+        let eyes = [(3 / 100) * this.game.width, (4 / 100) * this.game.height];
         context3.drawImage(this.eyes, this.x + ((this.width / 2) - (eyes[0] / 2)), this.y, eyes[0], eyes[1]);
     }
 }

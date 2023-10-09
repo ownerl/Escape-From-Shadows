@@ -3,27 +3,32 @@
 export class Player {
     constructor(game) {
         this.game = game;
-        this.width = 30;
-        this.height = 50;
-        this.x = 500;
+        this.width = 3;
+        this.height = 5;
+        this.x = 50;
         this.y = 0;
         this.lanternX = 0;
         this.lanternY = 0;
         this.eyes = new Image();
         this.eyes.src = '../images/googly.png';
+        // Scale to percentages of canvas size instead of pixels
+        this.width = (this.width / 100) * this.game.width;
+        this.height = (this.height / 100) * this.game.height;
+        this.x = (this.x / 100) * this.game.width;
+        this.y = (this.y / 100) * this.game.height;
     }
     update(keysPressed, trees) {
         // Translating registered key inputs to movement
         const diagonalMultiplier = 0.7;
         const speed = 1;
-        const treeTopOffset = 145;
-        const treeBottomOffset = 140;
-        const treeRightOffset = 50;
-        const treeLeftOffset = 50;
+        const treeTopOffset = (14.5 / 100) * this.game.height;
+        const treeBottomOffset = (14.0 / 100) * this.game.height;
+        const treeRightOffset = (5 / 100) * this.game.width;
+        const treeLeftOffset = (5 / 100) * this.game.width;
         // Turn lantern on or off
         if (this.game.input.keyToggle === true) {
-            this.lanternX = 200;
-            this.lanternY = 200;
+            this.lanternX = (20 / 100) * this.game.width;
+            this.lanternY = (20 / 100) * this.game.height;
         }
         if (this.game.input.keyToggle === false) {
             this.lanternX = 0;
@@ -108,6 +113,11 @@ export class Player {
 
     }
     render(context, context2, context3) {
+        let circleRadius = 100;
+        let RGB = [0, 0, 0];
+        let alphas = [0, 0, 0.3, 0.5, 1];
+        let playerCenterX = this.x - ((this.lanternX / 2) - (this.width / 2));
+        let playerCenterY = this.y - ((this.lanternY / 2) - (this.height / 2));
         // lantern lights
         //context.fillStyle = 'yellow';
         //context.fillRect(this.x - ((this.lanternX / 2) - (this.width / 2)), this.y - ((this.lanternY / 2) - (this.height / 2)), this.lanternX, this.lanternY);
@@ -116,14 +126,14 @@ export class Player {
         context.fillStyle = 'blue';
         context.fillRect(this.x, this.y, this.width, this.height);
         // googly eyes
-        let eyes = [30, 40];
+        let eyes = [(3 / 100) * this.game.width, (4 / 100) * this.game.height];
         context3.drawImage(this.eyes, this.x + ((this.width / 2) - (eyes[0] / 2)), this.y, eyes[0], eyes[1]);
         // clip for lantern
         let circle = new Path2D();
         context2.save();
         circle.arc(this.x + this.width / 2, this.y + this.height / 2, this.lanternX/2, 0, Math.PI * 2);
         context2.clip(circle);
-        context2.clearRect(this.x - ((this.lanternX / 2) - (this.width / 2)), this.y - ((this.lanternY / 2) - (this.height / 2)), 200, 200);
+        context2.clearRect(this.x - ((this.lanternX / 2) - (this.width / 2)), this.y - ((this.lanternY / 2) - (this.height / 2)), (20 / 100) * this.game.width, (20 / 100) * this.game.height);
         context2.restore();
     }
     collision() {

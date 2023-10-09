@@ -17,8 +17,8 @@ const ctx2 = canvas2.getContext('2d');
 const ctx3 = canvas3.getContext('2d');
 
 // Best resolution 1000px
-canvas1.width = 1000;
-canvas1.height = 1000;
+canvas1.height = window.screen.height;
+canvas1.width = canvas1.height;
 canvas2.width = canvas1.width;
 canvas2.height = canvas1.height;
 canvas3.width = canvas1.width;
@@ -28,7 +28,7 @@ class Game {
     constructor(width, height) {
         this.width = width;
         this.height = height;
-        this.graceTimer = 10;
+        this.graceTimer = 100;
         this.gracePeriod = true;
         this.player = new Player(this);
         this.input = new InputHandler(this);
