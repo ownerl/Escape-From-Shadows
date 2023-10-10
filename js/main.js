@@ -35,10 +35,9 @@ class Game {
         this.input = new InputHandler(this);
         this.enemy = new Demon(this);
         this.trees = [];
+        this.maxTrees = 1;
+        this.treeCount = 0;
         this.enemies = [this.enemy];
-        for (let i = 0; i < 20; i++) {
-            this.trees[i] = new Obstacle(this.width, this.height);
-        }
         this.greenKey = new KeyObject(this);
         this.escape = new Door(this);
         this.keysCollected = [];
@@ -48,7 +47,23 @@ class Game {
             this.gracePeriod = false;
         });
     }
+    makeTrees() {
+        if (this.treeCount < this.maxTrees) {
+            let newTree = new Obstacle(this.width, this.height, this.trees);
+            this.trees.push(newTree);
+            this.treeCount ++;
+        }
+    }
+
     update() {
+        // delete overlapping trees for player mobility
+        this.trees.forEach((tree) => tree.update(this.trees));
+        this.trees.forEach((tree) => {
+            if (tree.correctSpawn === false) {
+                tree = null;
+            }
+        })
+        console.log(this.trees)
         if (this.playerIsAlive) {
             this.player.update(this.input.keysPressed, this.trees);
         }
@@ -66,8 +81,8 @@ class Game {
         if (this.gracePeriod === false) {
             this.enemies.forEach((baddie) => baddie.render(context, context3));
         }
-        this.trees.forEach((tree) => tree.render(context));
         this.greenKey.render(context, 'green');
+        this.trees.forEach((tree) => tree.render(context, this.player));
     }
     collision() {
         if (this.gracePeriod === false) {
@@ -82,6 +97,7 @@ function animate() {
     ctx.clearRect(0, 0, canvas1.width, canvas1.height);
     ctx3.clearRect(0, 0, canvas1.width, canvas1.height);
     ctx2.fillRect(0, 0, canvas1.width, canvas1.height);
+    game.makeTrees();
     game.update();
     game.render(ctx, ctx2, ctx3);
     game.collision();
@@ -99,7 +115,7 @@ function winScreen() {
 function timer(graceTimer, onTimerComplete) {
     const intervalId = setInterval(() => {
         if (graceTimer > 0) {
-            console.log(`${graceTimer} seconds left!`)
+            //console.log(`${graceTimer} seconds left!`)
             graceTimer --;
         } else {
             clearInterval(intervalId);

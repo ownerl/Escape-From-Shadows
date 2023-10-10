@@ -27,8 +27,8 @@ export class Player {
         const treeLeftOffset = (5 / 100) * this.game.width;
         // Turn lantern on or off
         if (this.game.input.keyToggle === true) {
-            this.lanternX = (20 / 100) * this.game.width;
-            this.lanternY = (20 / 100) * this.game.height;
+            this.lanternX = (50 / 100) * this.game.width;
+            this.lanternY = (50 / 100) * this.game.height;
         }
         if (this.game.input.keyToggle === false) {
             this.lanternX = 0;
@@ -133,7 +133,7 @@ export class Player {
         context2.save();
         circle.arc(this.x + this.width / 2, this.y + this.height / 2, this.lanternX/2, 0, Math.PI * 2);
         context2.clip(circle);
-        context2.clearRect(this.x - ((this.lanternX / 2) - (this.width / 2)), this.y - ((this.lanternY / 2) - (this.height / 2)), (20 / 100) * this.game.width, (20 / 100) * this.game.height);
+        context2.clearRect(this.x - ((this.lanternX / 2) - (this.width / 2)), this.y - ((this.lanternY / 2) - (this.height / 2)), this.lanternX, this.lanternY);
         context2.restore();
     }
     collision() {

@@ -90,7 +90,7 @@ export class Door {
 }
 
 export class Obstacle {
-    constructor(width, height) {
+    constructor(width, height, treeArray) {
         this.gameWidth = width;
         this.gameHeight = height;
         this.width = 4;
@@ -103,11 +103,41 @@ export class Obstacle {
         this.height = (this.height / 100) * this.gameHeight;
         this.x = (this.x / 100) * this.gameWidth;
         this.y = (this.y / 100) * this.gameHeight;
+        this.correctSpawn = true;
     }
-    update () {
+    update (treeArray) {
+        treeArray.forEach((tree) => {
+            if (
+                this.x + this.width > tree.x &&
+                this.x < tree.x + tree.width &&
+                this.y + this.height > tree.y &&
+                this.y < tree.y + tree.height
+                // tree.x < this.x + this.width &&
+                // tree.x + tree.width > this.x &&
+                // tree.y < this.y + this.height &&
+                // tree.y + tree.height > this.y
+                ) {
+                    this.correctSpawn = false;
+                }
+        })
+    }
+    render(context, player) {
+        if (
+            player.y + player.height > this.y + (0.06 * this.gameHeight) &&
+            player.y < this.y + this.height + (0.11 * this.gameHeight) &&
+            player.x + player.width > this.x + (0.04 * this.gameWidth) &&
+            player.x < this.x + this.width + (0.06 * this.gameWidth)
+        ) {
+            context.save();
+            context.globalAlpha = 0.3;
+            context.drawImage(this.trees, this.x, this.y, this.width + (0.1 * this.gameWidth), this.height + (0.16 * this.gameHeight));
+            context.restore();
+            
+            context.fillRect(this.x, this.y, 5, 5)
+            context.fillRect(this.x + this.width + (0.1 * this.gameWidth) - 5, this.y, 5, 5)
 
-    }
-    render(context) {
-        context.drawImage(this.trees, this.x, this.y, this.width + (0.1 * this.gameWidth), this.height + (0.16 * this.gameHeight));
+        } else {
+            context.drawImage(this.trees, this.x, this.y, this.width + (0.1 * this.gameWidth), this.height + (0.16 * this.gameHeight));
+        }
     }
 }
