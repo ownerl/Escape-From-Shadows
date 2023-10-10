@@ -90,23 +90,24 @@ export class Door {
 }
 
 export class Obstacle {
-    constructor(game) {
-        this.game = game;
+    constructor(width, height) {
+        this.gameWidth = width;
+        this.gameHeight = height;
         this.width = 4;
         this.height = 4;
         this.x = 5 + Math.random() * 90;
         this.y = 5 + Math.random() * 80;
         this.trees = new Image();
         this.trees.src = '../images/tree.png';
-        this.width = (this.width / 100) * this.game.width;
-        this.height = (this.height / 100) * this.game.height;
-        this.x = (this.x / 100) * this.game.width;
-        this.y = (this.y / 100) * this.game.height;
+        this.width = (this.width / 100) * this.gameWidth;
+        this.height = (this.height / 100) * this.gameHeight;
+        this.x = (this.x / 100) * this.gameWidth;
+        this.y = (this.y / 100) * this.gameHeight;
     }
     update () {
 
     }
     render(context) {
-        context.drawImage(this.trees, this.x, this.y, this.width + (0.1 * this.game.width), this.height + (0.16 * this.game.height));
+        context.drawImage(this.trees, this.x, this.y, this.width + (0.1 * this.gameWidth), this.height + (0.16 * this.gameHeight));
     }
 }

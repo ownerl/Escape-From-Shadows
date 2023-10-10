@@ -37,7 +37,7 @@ class Game {
         this.trees = [];
         this.enemies = [this.enemy];
         for (let i = 0; i < 20; i++) {
-            this.trees[i] = new Obstacle(this);
+            this.trees[i] = new Obstacle(this.width, this.height);
         }
         this.greenKey = new KeyObject(this);
         this.escape = new Door(this);
