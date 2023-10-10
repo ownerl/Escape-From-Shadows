@@ -8,6 +8,7 @@ import { KeyObject, Door, Obstacle } from './interactions.js';
 const canvas1 = document.querySelector('#canvas1');
 const canvas2 = document.querySelector('#canvas2');
 const canvas3 = document.querySelector('#canvas3');
+const buttonPlay = document.querySelector('button');
 /* <><><><><><><>      CANVAS SETUP     <><><><><><><> */
 // Game area
 const ctx = canvas1.getContext('2d');
@@ -36,7 +37,7 @@ class Game {
         this.trees = [];
         this.enemies = [this.enemy];
         for (let i = 0; i < 20; i++) {
-            this.trees[i] = new Obstacle();
+            this.trees[i] = new Obstacle(this);
         }
         this.greenKey = new KeyObject(this);
         this.escape = new Door(this);
