@@ -1,6 +1,8 @@
 # Escape From Shadows
 Take the role of a hapless adventurer lost in the shadowy woods. Explore your dark surroundings to find a way to escape these woods while avoiding the danger lurking in the dark.
 
+Play it here: https://ownerl.github.io/Escape-From-Shadows/
+
 ## About
 Escape From Shadows will be a top down 2D exploration game where the playable area (henceforth refered to as a map), a spooky forest, is enshrouded in shadows, thus limiting the player's vision. The player shall start at a spot on the map with a lantern where they will be given a short grace period to explore their immediate surroundings. 
 
