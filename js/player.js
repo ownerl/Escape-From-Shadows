@@ -13,6 +13,8 @@ export class Player {
         this.eyes.src = './images/googly.png';
         this.character = new Image();
         this.character.src = './images/player.png';
+        this.characterRunning = new Image();
+        this.characterRunning.src = './images/playeranimations.png'
         // Scale to percentages of canvas size instead of pixels
         this.width = (this.width / 100) * this.game.width;
         this.height = (this.height / 100) * this.game.height;
@@ -125,9 +127,18 @@ export class Player {
         //context.fillRect(this.x - ((this.lanternX / 2) - (this.width / 2)), this.y - ((this.lanternY / 2) - (this.height / 2)), this.lanternX, this.lanternY);
 
         // player
+        let spriteWidth = 349;
+        let spriteHeight = 493;
+        let horizontalFrame = 1;
         context.fillStyle = 'blue';
         context.fillRect(this.x, this.y, this.width, this.height);
-        context3.drawImage(this.character, this.x, this.y, 100, 100);
+        context3.drawImage(this.characterRunning, horizontalFrame * spriteWidth, 0, spriteWidth, spriteHeight, this.x, this.y, 71, 100);
+        console.log(horizontalFrame);
+        if (horizontalFrame < 12) horizontalFrame++;
+        else horizontalFrame = 1;
+        // context.fillStyle = 'blue';
+        // context.fillRect(this.x, this.y, this.width, this.height);
+        // context3.drawImage(this.character, this.x, this.y, 100, 100);
         // googly eyes
         let eyes = [(3 / 100) * this.game.width, (4 / 100) * this.game.height];
         context3.drawImage(this.eyes, this.x + ((this.width / 2) - (eyes[0] / 2)), this.y, eyes[0], eyes[1]);
