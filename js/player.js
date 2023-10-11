@@ -10,9 +10,9 @@ export class Player {
         this.lanternX = 0;
         this.lanternY = 0;
         this.eyes = new Image();
-        this.eyes.src = '../images/googly.png';
+        this.eyes.src = './images/googly.png';
         this.character = new Image();
-        this.character.src = '../images/player.png';
+        this.character.src = './images/player.png';
         // Scale to percentages of canvas size instead of pixels
         this.width = (this.width / 100) * this.game.width;
         this.height = (this.height / 100) * this.game.height;

@@ -12,7 +12,7 @@ export class KeyObject {
         this.x = 5 + Math.random() * 80;
         this.y = 5 + Math.random() * 80;
         this.key = new Image();
-        this.key.src = '../images/key.png';
+        this.key.src = './images/key.png';
         this.width = (this.width / 100) * this.game.width;
         this.height = (this.height / 100) * this.game.height;
         this.x = (this.x / 100) * this.game.width;
@@ -65,7 +65,7 @@ export class Door {
             this.y = Math.random() * 95;
         }
         this.door = new Image();
-        this.door.src = '../images/door.png';
+        this.door.src = './images/door.png';
         this.width = (this.width / 100) * this.game.width;
         this.height = (this.height / 100) * this.game.height;
         this.x = (this.x / 100) * this.game.width;
@@ -98,7 +98,7 @@ export class Obstacle {
         this.x = 5 + Math.random() * 80;
         this.y = Math.random() * 90;
         this.trees = new Image();
-        this.trees.src = '../images/tree.png';
+        this.trees.src = './images/tree.png';
         this.width = (this.width / 100) * this.gameWidth;
         this.height = (this.height / 100) * this.gameHeight;
         this.x = (this.x / 100) * this.gameWidth;

@@ -9,7 +9,7 @@ export class Demon {
         this.y = Math.random() * 100; // redo
         this.speedEnemy = (Math.random() * 0.3) + 0.5
         this.eyes = new Image();
-        this.eyes.src = '../images/red.png'
+        this.eyes.src = './images/red.png'
         // Scale to percentages of canvas size instead of pixels
         this.width = (this.width / 100) * this.game.width;
         this.height = (this.height / 100) * this.game.height;
