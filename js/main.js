@@ -8,7 +8,7 @@ import { KeyObject, Door, Obstacle } from './interactions.js';
 const canvas1 = document.querySelector('#canvas1');
 const canvas2 = document.querySelector('#canvas2');
 const canvas3 = document.querySelector('#canvas3');
-const buttonPlay = document.querySelector('button');
+const buttonPlay = document.querySelector('#start');
 /* <><><><><><><>      CANVAS SETUP     <><><><><><><> */
 // Game area
 const ctx = canvas1.getContext('2d');
@@ -29,13 +29,13 @@ class Game {
     constructor(width, height) {
         this.width = width;
         this.height = height;
-        this.graceTimer = 100;
+        this.graceTimer = 5;
         this.gracePeriod = true;
         this.player = new Player(this);
         this.input = new InputHandler(this);
         this.enemy = new Demon(this);
         this.trees = [];
-        this.maxTrees = 1;
+        this.maxTrees = 90;
         this.treeCount = 0;
         this.enemies = [this.enemy];
         this.greenKey = new KeyObject(this);
@@ -43,27 +43,64 @@ class Game {
         this.keysCollected = [];
         this.playerIsAlive = true;
         this.win = false;
-        timer(this.graceTimer, () => {
-            this.gracePeriod = false;
-        });
+
     }
+    timer() {
+        console.log('running!')
+        const intervalID = setInterval(() => {
+            if (this.graceTimer > 0) {
+                console.log(`${this.graceTimer} seconds left!`)
+                this.graceTimer --;
+            } 
+            if (this.graceTimer <= 0) {
+                clearInterval(intervalID);
+                this.gracePeriod = false;
+            }
+        }, 1000);
+    }
+
     makeTrees() {
         if (this.treeCount < this.maxTrees) {
+            //console.log('tree creataed!')
             let newTree = new Obstacle(this.width, this.height, this.trees);
             this.trees.push(newTree);
             this.treeCount ++;
+        }
+                // Sort them for correct z-height rendering
+        this.trees.sort((a, b) => a.y - b.y);
+    }
+    removeTrees() {
+        if (this.treeCount === this.maxTrees - 1) {
+            console.log('worked!')
+            for (let j = this.trees.length - 1; j > 0; j--) {
+                let treeJ = this.trees[j];
+                for (let i = j - 1; i >= 0; i--) {
+                    let treeI = this.trees[i];
+                    if (
+                        treeI.x + treeI.width > treeJ.x &&
+                        treeI.x < treeJ.x + treeJ.width &&
+                        treeI.y + treeI.height > treeJ.y &&
+                        treeI.y < treeJ.y + treeJ.height
+
+                        //
+
+                        // treeI.x + treeI.width > treeJ.x - (0.03 * this.width) &&
+                        // treeI.x < treeJ.x + treeJ.width + (0.03 * this.width) &&
+                        // treeI.y + treeI.height > treeJ.y - (0.05 * this.height) &&
+                        // treeI.y < treeJ.y + treeJ.height
+                        ) {
+                            this.trees.splice(j, 1);
+                        }
+                }
+            }
         }
     }
 
     update() {
         // delete overlapping trees for player mobility
         this.trees.forEach((tree) => tree.update(this.trees));
-        this.trees.forEach((tree) => {
-            if (tree.correctSpawn === false) {
-                tree = null;
-            }
-        })
-        console.log(this.trees)
+        //console.log(this.trees)
+        
         if (this.playerIsAlive) {
             this.player.update(this.input.keysPressed, this.trees);
         }
@@ -98,6 +135,7 @@ function animate() {
     ctx3.clearRect(0, 0, canvas1.width, canvas1.height);
     ctx2.fillRect(0, 0, canvas1.width, canvas1.height);
     game.makeTrees();
+    game.removeTrees();
     game.update();
     game.render(ctx, ctx2, ctx3);
     game.collision();
@@ -112,16 +150,23 @@ function winScreen() {
     alert('you win this game')
 }
 
-function timer(graceTimer, onTimerComplete) {
-    const intervalId = setInterval(() => {
-        if (graceTimer > 0) {
-            //console.log(`${graceTimer} seconds left!`)
-            graceTimer --;
-        } else {
-            clearInterval(intervalId);
-            onTimerComplete();
-        }
-    }, 1000)
-    return false;
+// function timer(graceTimer, onTimerComplete, game) {
+//     const intervalId = setInterval(() => {
+//         if (graceTimer > 0) {
+//             console.log(`${graceTimer} seconds left!`)
+//             graceTimer --;
+//         } else {
+//             clearInterval(intervalId);
+//             onTimerComplete();
+//             game.gracePeriod = false;
+//         }
+//     }, 1000)
+// }
+
+function gameStart() {
+    game.timer();
+    buttonPlay.style.display = 'none';
+    animate();
 }
-animate();
+
+buttonPlay.addEventListener('click', gameStart);

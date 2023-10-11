@@ -90,36 +90,21 @@ export class Door {
 }
 
 export class Obstacle {
-    constructor(width, height, treeArray) {
+    constructor(width, height) {
         this.gameWidth = width;
         this.gameHeight = height;
         this.width = 4;
         this.height = 4;
-        this.x = 5 + Math.random() * 90;
-        this.y = 5 + Math.random() * 80;
+        this.x = 5 + Math.random() * 80;
+        this.y = Math.random() * 90;
         this.trees = new Image();
         this.trees.src = '../images/tree.png';
         this.width = (this.width / 100) * this.gameWidth;
         this.height = (this.height / 100) * this.gameHeight;
         this.x = (this.x / 100) * this.gameWidth;
         this.y = (this.y / 100) * this.gameHeight;
-        this.correctSpawn = true;
     }
-    update (treeArray) {
-        treeArray.forEach((tree) => {
-            if (
-                this.x + this.width > tree.x &&
-                this.x < tree.x + tree.width &&
-                this.y + this.height > tree.y &&
-                this.y < tree.y + tree.height
-                // tree.x < this.x + this.width &&
-                // tree.x + tree.width > this.x &&
-                // tree.y < this.y + this.height &&
-                // tree.y + tree.height > this.y
-                ) {
-                    this.correctSpawn = false;
-                }
-        })
+    update () {
     }
     render(context, player) {
         if (
