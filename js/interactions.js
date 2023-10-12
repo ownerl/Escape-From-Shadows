@@ -109,7 +109,7 @@ export class Obstacle {
     render(context, player) {
         if (
             player.y + player.height > this.y + (0.06 * this.gameHeight) &&
-            player.y < this.y + this.height + (0.11 * this.gameHeight) &&
+            player.y < this.y + this.height + (0.14 * this.gameHeight) &&
             player.x + player.width > this.x + (0.04 * this.gameWidth) &&
             player.x < this.x + this.width + (0.06 * this.gameWidth)
         ) {

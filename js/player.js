@@ -3,36 +3,51 @@
 export class Player {
     constructor(game) {
         this.game = game;
-        this.width = 3;
-        this.height = 5;
+        this.width = (3.5 * 1.3);
+        this.height = (5 * 1.3);
         this.x = 50;
         this.y = 0;
         this.lanternX = 0;
         this.lanternY = 0;
         this.eyes = new Image();
-        this.eyes.src = './images/googly.png';
+        this.eyes.src = './images/playerEyes.png';
         this.character = new Image();
         this.character.src = './images/player.png';
         this.characterRunning = new Image();
-        this.characterRunning.src = './images/playeranimations.png'
+        this.characterRunning.src = './images/playeranimations.png';
+        this.eyesRunning = new Image();
+        this.eyesRunning.src = './images/eyesanimations.png';
         // Scale to percentages of canvas size instead of pixels
         this.width = (this.width / 100) * this.game.width;
         this.height = (this.height / 100) * this.game.height;
         this.x = (this.x / 100) * this.game.width;
         this.y = (this.y / 100) * this.game.height;
+        this.horizontalFrame = 0;
+        this.fps = 30;
+        this.frameInterval = 1000/this.fps;
+        this.frameTimer = 0;
     }
-    update(keysPressed, trees) {
+    update(keysPressed, trees, timeChange) {
+        if (this.frameTimer > this.frameInterval) {
+            this.frameTimer = 0;
+            if (this.horizontalFrame < 11) this.horizontalFrame++;
+            else this.horizontalFrame = 0;
+        } else {
+            this.frameTimer += timeChange;
+        }
+
         // Translating registered key inputs to movement
         const diagonalMultiplier = 0.7;
-        const speed = 1;
+        const speed = 0.7;
+        const slowSpeed = 0.2
         const treeTopOffset = (14.5 / 100) * this.game.height;
         const treeBottomOffset = (14.0 / 100) * this.game.height;
         const treeRightOffset = (5 / 100) * this.game.width;
         const treeLeftOffset = (5 / 100) * this.game.width;
         // Turn lantern on or off
         if (this.game.input.keyToggle === true) {
-            this.lanternX = (50 / 100) * this.game.width;
-            this.lanternY = (50 / 100) * this.game.height;
+            this.lanternX = (20 / 100) * this.game.width;
+            this.lanternY = (20 / 100) * this.game.height;
         }
         if (this.game.input.keyToggle === false) {
             this.lanternX = 0;
@@ -52,7 +67,7 @@ export class Player {
                     this.y < tree.y + treeTopOffset + tree.height && // top collision
                     this.y + this.height > tree.y + treeBottomOffset // bottom collision
                     ) {
-                    this.y += isDiagonal ? speed * diagonalMultiplier : speed;
+                    this.y += isDiagonal ? slowSpeed * diagonalMultiplier : slowSpeed;
                 }
             })
         }
@@ -69,7 +84,7 @@ export class Player {
                     this.y < tree.y + treeTopOffset + tree.height && // top collision
                     this.y + this.height > tree.y + treeBottomOffset // bottom collision
                     ) {
-                    this.y -= isDiagonal ? speed * diagonalMultiplier : speed;
+                    this.y -= isDiagonal ? slowSpeed * diagonalMultiplier : slowSpeed;
                 }
             })
         }
@@ -86,7 +101,7 @@ export class Player {
                     this.y < tree.y + treeTopOffset + tree.height && // top collision
                     this.y + this.height > tree.y + treeBottomOffset // bottom collision
                     ) {
-                    this.x -= isDiagonal ? speed * diagonalMultiplier : speed;
+                    this.x -= isDiagonal ? slowSpeed * diagonalMultiplier : slowSpeed;
                 }
             })
         }
@@ -103,7 +118,7 @@ export class Player {
                     this.y < tree.y + treeTopOffset + tree.height && // top collision
                     this.y + this.height > tree.y + treeBottomOffset // bottom collision
                     ) {
-                    this.x += isDiagonal ? speed * diagonalMultiplier : speed;
+                    this.x += isDiagonal ? slowSpeed * diagonalMultiplier : slowSpeed;
                 }
             })
         }
@@ -116,32 +131,37 @@ export class Player {
         // Set environmental obstacles
 
     }
-    render(context, context2, context3) {
-        let circleRadius = 100;
-        let RGB = [0, 0, 0];
-        let alphas = [0, 0, 0.3, 0.5, 1];
-        let playerCenterX = this.x - ((this.lanternX / 2) - (this.width / 2));
-        let playerCenterY = this.y - ((this.lanternY / 2) - (this.height / 2));
-        // lantern lights
-        //context.fillStyle = 'yellow';
-        //context.fillRect(this.x - ((this.lanternX / 2) - (this.width / 2)), this.y - ((this.lanternY / 2) - (this.height / 2)), this.lanternX, this.lanternY);
-
+    render(context, context2, context3, context1, keysPressed) {
+        // Soft lantern - stretch goal
+        // let circleRadius = 100;
+        // let RGB = [0, 0, 0];
+        // let alphas = [0, 0, 0.3, 0.5, 1];
+        // let playerCenterX = this.x - ((this.lanternX / 2) - (this.width / 2));
+        // let playerCenterY = this.y - ((this.lanternY / 2) - (this.height / 2));
+        
         // player
-        let spriteWidth = 349;
-        let spriteHeight = 493;
-        let horizontalFrame = 1;
-        context.fillStyle = 'blue';
-        context.fillRect(this.x, this.y, this.width, this.height);
-        context3.drawImage(this.characterRunning, horizontalFrame * spriteWidth, 0, spriteWidth, spriteHeight, this.x, this.y, 71, 100);
-        console.log(horizontalFrame);
-        if (horizontalFrame < 12) horizontalFrame++;
-        else horizontalFrame = 1;
-        // context.fillStyle = 'blue';
-        // context.fillRect(this.x, this.y, this.width, this.height);
-        // context3.drawImage(this.character, this.x, this.y, 100, 100);
-        // googly eyes
-        let eyes = [(3 / 100) * this.game.width, (4 / 100) * this.game.height];
-        context3.drawImage(this.eyes, this.x + ((this.width / 2) - (eyes[0] / 2)), this.y, eyes[0], eyes[1]);
+        let runningWidth = 349;
+        let runningHeight = 493;
+        // aligning sprites is hard
+        let runningEyesW = 350;
+        let runningEyesH = 492;
+        let standingWidth = this.width * 1.15;
+        let standingHeight = this.height * 1.10;
+        let standingX = this.x - (this.width * 0.075);
+        let standingY = this.y - (this.height * 0.04);
+        if (keysPressed.includes('w') || keysPressed.includes('a') || keysPressed.includes('s') || keysPressed.includes('d')) {
+            context.drawImage(this.characterRunning, this.horizontalFrame * runningWidth, 0, runningWidth, runningHeight, this.x, this.y, this.width, this.height);
+        } else {
+            context.drawImage(this.character, standingX, standingY, standingWidth, standingHeight);
+        }
+
+        // glowing player eyes
+        if (keysPressed.includes('w') || keysPressed.includes('a') || keysPressed.includes('s') || keysPressed.includes('d')) {
+            context3.drawImage(this.eyesRunning, this.horizontalFrame * runningEyesW, 0, runningEyesW, runningEyesH, this.x + (this.width * 0.02), this.y, this.width, this.height);
+        } else {
+            context3.drawImage(this.eyes, standingX, standingY, standingWidth, standingHeight);
+        }
+
         // clip for lantern
         let circle = new Path2D();
         context2.save();
@@ -149,6 +169,12 @@ export class Player {
         context2.clip(circle);
         context2.clearRect(this.x - ((this.lanternX / 2) - (this.width / 2)), this.y - ((this.lanternY / 2) - (this.height / 2)), this.lanternX, this.lanternY);
         context2.restore();
+
+        // lantern light orange glow
+        context1.globalAlpha = 0.1;
+        context1.fillStyle = 'orange';
+        context1.fillRect(0, 0, this.game.width, this.game.height);
+
     }
     collision() {
         this.game.enemies.forEach(enemy => {

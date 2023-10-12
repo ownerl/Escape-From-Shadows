@@ -33,6 +33,17 @@ img {
     z-index: 1;
 }
 
+#canvas11 {
+    border: 5px solid black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    aspect-ratio: 1 / 1;
+    max-height: 100%;
+    z-index: 2;
+}
+
 #canvas2 {
     border: 5px solid black;
     position: absolute;
