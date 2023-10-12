@@ -51,7 +51,7 @@ class Game {
     constructor(width, height) {
         this.width = width;
         this.height = height;
-        this.graceTimer = 1;
+        this.graceTimer = 5;
         this.gracePeriod = true;
         this.player = new Player(this);
         this.input = new InputHandler(this);

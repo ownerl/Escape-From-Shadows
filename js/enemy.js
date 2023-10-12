@@ -5,8 +5,13 @@ export class Demon {
         this.game = game;
         this.width = 4;
         this.height = 6;
-        this.x = Math.random() * 100; // redo
-        this.y = Math.random() * 100; // redo
+        this.spawnRandomizer = Math.random() * 10;
+        if (this.spawnRandomizer > 5) {
+            this.x = -50;
+        } else {
+            this.x = this.game.width + 50;
+        }
+        this.y = Math.random();
         this.speedEnemy = (Math.random() * 0.3) + 0.2;
         this.demon = new Image();
         this.demon.src = './images/demon.png'
@@ -15,8 +20,7 @@ export class Demon {
         // Scale to percentages of canvas size instead of pixels
         this.width = (this.width / 100) * this.game.width;
         this.height = (this.height / 100) * this.game.height;
-        this.x = (this.x / 100) * this.game.width;
-        this.y = (this.y / 100) * this.game.height;
+        this.y = this.y * this.game.height;
         
     }
     update(player, input) {

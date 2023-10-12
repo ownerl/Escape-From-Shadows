@@ -25,8 +25,8 @@ export class KeyObject {
             player.y < this.y + this.height &&
             player.y + player.height > this.y
         ) {
-            this.x = player.x + 25;
-            this.y = player.y - 5;
+            this.x = player.x + (0.9 / 100) * this.game.width;
+            this.y = player.y + (3 / 100) * this.game.height;
             if (!this.game.keysCollected.includes(color)) {
                 keySound.play();
                 this.game.keysCollected.push(color);
