@@ -10,6 +10,7 @@ const canvas11 = document.querySelector('#canvas11');
 const canvas2 = document.querySelector('#canvas2');
 const canvas3 = document.querySelector('#canvas3');
 const buttonPlay = document.querySelector('#start');
+const buttonRestart = document.querySelector('#restart');
 const background = document.querySelector('#background');
 const leftText = document.querySelector('#leftText')
 /* <><><><><><><>      CANVAS SETUP     <><><><><><><> */
@@ -29,7 +30,7 @@ canvas2.width = canvas1.width;
 canvas2.height = canvas1.height;
 canvas3.width = canvas1.width;
 canvas3.height = canvas1.height;
-/* <><><><><><><>        CLASSES        <><><><><><><> */
+/* <><><><><><><>        GAME           <><><><><><><> */
 class Game {
     constructor(width, height) {
         this.width = width;
@@ -136,16 +137,12 @@ class Game {
 const game = new Game(canvas1.width, canvas1.height);
 
 let lastTime = 0;
-/* <><><><><><><>       FUNCTIONS       <><><><><><><> */
+/* <><><><><><><>   OUTSIDE FUNCTIONS   <><><><><><><> */
 function updateAspectRatio() {
     const centralContent = document.getElementById('centralContent');
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
-    
-    // Maximum size with 1:1 aspect ratio
     const maxSize = Math.min(viewportWidth, viewportHeight);
-    
-    // Set the size
     centralContent.style.width = maxSize + 'px';
     centralContent.style.height = maxSize + 'px';
 }
@@ -174,17 +171,16 @@ function winScreen() {
     ctx3.clearRect(0, 0, canvas1.width, canvas1.height);
     ctx3.fillStyle = 'black';
     ctx3.fillRect(0, 0, canvas1.width, canvas1.height)
+    buttonRestart.style.visibility = 'visible';
 
 }
 
 function gameStart() {
     background.setAttribute('src', './images/background1.png')
     game.timer();
-    buttonPlay.style.display = 'none';
+    buttonPlay.style.visibility = 'hidden';
     animate(0);
 }
-
-buttonPlay.addEventListener('click', gameStart);
 
 window.addEventListener('keyup', e => {
     let x = e.key.toLowerCase();
@@ -196,7 +192,9 @@ window.addEventListener('keyup', e => {
     console.log(leftText.style.visibility)
 })
 
+window.addEventListener('resize', updateAspectRatio);
+buttonPlay.addEventListener('click', gameStart);
+buttonRestart.addEventListener('click', () => location.reload());
 leftText.style.visibility = 'visible';
 
-window.addEventListener('resize', updateAspectRatio);
 updateAspectRatio();
