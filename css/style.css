@@ -82,7 +82,7 @@ button:hover {
 
 #endgame {
     position: absolute;
-    visibility: visible;
+    visibility: hidden;
     color: rgb(118, 191, 0);
     z-index: 55;
 }

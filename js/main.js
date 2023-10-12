@@ -4,6 +4,11 @@ import { Player } from './player.js';
 import { Demon } from './enemy.js';
 import { KeyObject, Door, Obstacle } from './interactions.js';
 
+/* <><><><><><><>         AUDIO         <><><><><><><> */
+const backgroundSounds = new Audio('./audio/nightsounds.wav');
+const footsteps = new Audio('./audio/running.wav');
+
+
 /* <><><><><><><>      DOM SELECTORS    <><><><><><><> */
 const canvas1 = document.querySelector('#canvas1');
 const canvas11 = document.querySelector('#canvas11');
@@ -12,7 +17,8 @@ const canvas3 = document.querySelector('#canvas3');
 const buttonPlay = document.querySelector('#start');
 const buttonRestart = document.querySelector('#restart');
 const background = document.querySelector('#background');
-const leftText = document.querySelector('#leftText')
+const leftText = document.querySelector('#leftText');
+const endgame = document.querySelector('#endgame');
 /* <><><><><><><>      CANVAS SETUP     <><><><><><><> */
 // Game area
 const ctx = canvas1.getContext('2d');
@@ -35,7 +41,7 @@ class Game {
     constructor(width, height) {
         this.width = width;
         this.height = height;
-        this.graceTimer = 500;
+        this.graceTimer = 1;
         this.gracePeriod = true;
         this.player = new Player(this);
         this.input = new InputHandler(this);
@@ -72,7 +78,7 @@ class Game {
             this.trees.push(newTree);
             this.treeCount ++;
         }
-                // Sort them for correct z-height rendering
+                // Sort trees for correct z-level rendering
         this.trees.sort((a, b) => a.y - b.y);
     }
     removeTrees() {
@@ -87,13 +93,6 @@ class Game {
                         treeI.x < treeJ.x + treeJ.width &&
                         treeI.y + treeI.height > treeJ.y &&
                         treeI.y < treeJ.y + treeJ.height
-
-                        //
-
-                        // treeI.x + treeI.width > treeJ.x - (0.03 * this.width) &&
-                        // treeI.x < treeJ.x + treeJ.width + (0.03 * this.width) &&
-                        // treeI.y + treeI.height > treeJ.y - (0.05 * this.height) &&
-                        // treeI.y < treeJ.y + treeJ.height
                         ) {
                             this.trees.splice(j, 1);
                         }
@@ -171,7 +170,7 @@ function winScreen() {
     ctx3.clearRect(0, 0, canvas1.width, canvas1.height);
     ctx3.fillStyle = 'black';
     ctx3.fillRect(0, 0, canvas1.width, canvas1.height)
-    buttonRestart.style.visibility = 'visible';
+    endgame.style.visibility = 'visible';
 
 }
 

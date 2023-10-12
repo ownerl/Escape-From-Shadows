@@ -3,13 +3,15 @@
 export class Demon {
     constructor(game) {
         this.game = game;
-        this.width = 2;
-        this.height = 3;
+        this.width = 4;
+        this.height = 6;
         this.x = Math.random() * 100; // redo
         this.y = Math.random() * 100; // redo
         this.speedEnemy = (Math.random() * 0.3) + 0.2;
+        this.demon = new Image();
+        this.demon.src = './images/demon.png'
         this.eyes = new Image();
-        this.eyes.src = './images/red.png'
+        this.eyes.src = './images/demoneyes.png'
         // Scale to percentages of canvas size instead of pixels
         this.width = (this.width / 100) * this.game.width;
         this.height = (this.height / 100) * this.game.height;
@@ -48,10 +50,11 @@ export class Demon {
         }
     }
     render(context, context3) {
-        context.fillStyle = 'red';
-        context.fillRect(this.x, this.y, this.width, this.height);
-        let eyes = [(3 / 100) * this.game.width, (4 / 100) * this.game.height];
-        context3.drawImage(this.eyes, this.x + ((this.width / 2) - (eyes[0] / 2)), this.y, eyes[0], eyes[1]);
+        // context.fillStyle = 'red';
+        // context.fillRect(this.x, this.y, this.width, this.height);
+        context.drawImage(this.demon, this.x, this.y, this.width, this.height);
+        // let eyes = [(3 / 100) * this.game.width, (4 / 100) * this.game.height];
+        context3.drawImage(this.eyes, this.x, this.y, this.width, this.height);
     }
 }
 
