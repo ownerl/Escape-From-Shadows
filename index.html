@@ -3,17 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escape From Shadows</title>
+    <title>Escape The Forest</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:wght@300&display=swap" rel="stylesheet">
     <link href="./css/style.css" rel="stylesheet">
     <script type="module" src="./js/main.js"></script>
 </head>
 <body>
-    <!-- <button>Play</button> -->
-    <button id="start">PLAY</button>
-    <img src="./images/background1.png" alt="background">
-    <canvas class="playArea" id="canvas1"></canvas>
-    <canvas class="playArea" id="canvas11"></canvas>
-    <canvas class="playArea" id="canvas2"></canvas>
-    <canvas class="playArea" id="canvas3"></canvas>
+    <div id="centralContent">
+        <button class="button4" id="start">PLAY</button>
+        <img id="background" src="./images/backgroundMenu.png" alt="background">
+        <canvas id="canvas1"></canvas>
+        <canvas id="canvas11"></canvas>
+        <canvas id="canvas2"></canvas>
+        <canvas id="canvas3"></canvas>
+        <div id="leftText">
+            <img id="controlkeys" src="./images/controls.png" alt="control scheme">
+            <h1 id="wasd">
+                To move:
+            </h1>
+            <h1 id="f">
+                To turn Lantern ON/OFF:
+            </h1>
+            <h1>Tasks:</h1>
+            <ul>
+                <li id="task1">Find Key</li>
+                <li id="task2">Escape through Hatch</li>
+                <li id="task3">Don't die</li>
+            </ul>
+            <h1 id="openclose">
+                Press X to open and close this.
+                <br> (P.S. Light attracts spooky things)
+            </h1>
+        </div>
+    </div>
 </body>
 </html>

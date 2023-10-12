@@ -46,8 +46,8 @@ export class Player {
         const treeLeftOffset = (5 / 100) * this.game.width;
         // Turn lantern on or off
         if (this.game.input.keyToggle === true) {
-            this.lanternX = (20 / 100) * this.game.width;
-            this.lanternY = (20 / 100) * this.game.height;
+            this.lanternX = (70 / 100) * this.game.width;
+            this.lanternY = (70 / 100) * this.game.height;
         }
         if (this.game.input.keyToggle === false) {
             this.lanternX = 0;

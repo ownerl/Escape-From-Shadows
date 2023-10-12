@@ -10,6 +10,8 @@ const canvas11 = document.querySelector('#canvas11');
 const canvas2 = document.querySelector('#canvas2');
 const canvas3 = document.querySelector('#canvas3');
 const buttonPlay = document.querySelector('#start');
+const background = document.querySelector('#background');
+const leftText = document.querySelector('#leftText')
 /* <><><><><><><>      CANVAS SETUP     <><><><><><><> */
 // Game area
 const ctx = canvas1.getContext('2d');
@@ -19,7 +21,6 @@ const ctx2 = canvas2.getContext('2d');
 // Glowing eyes
 const ctx3 = canvas3.getContext('2d');
 
-// Best resolution 1000px
 canvas1.height = window.screen.height;
 canvas1.width = canvas1.height;
 canvas11.width = canvas1.width;
@@ -39,7 +40,7 @@ class Game {
         this.input = new InputHandler(this);
         this.enemy = new Demon(this);
         this.trees = [];
-        this.maxTrees = 90;
+        this.maxTrees = 60;
         this.treeCount = 0;
         this.enemies = [this.enemy];
         this.greenKey = new KeyObject(this);
@@ -47,8 +48,8 @@ class Game {
         this.keysCollected = [];
         this.playerIsAlive = true;
         this.win = false;
-
     }
+
     timer() {
         console.log('running!')
         const intervalID = setInterval(() => {
@@ -136,9 +137,21 @@ const game = new Game(canvas1.width, canvas1.height);
 
 let lastTime = 0;
 /* <><><><><><><>       FUNCTIONS       <><><><><><><> */
+function updateAspectRatio() {
+    const centralContent = document.getElementById('centralContent');
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    
+    // Maximum size with 1:1 aspect ratio
+    const maxSize = Math.min(viewportWidth, viewportHeight);
+    
+    // Set the size
+    centralContent.style.width = maxSize + 'px';
+    centralContent.style.height = maxSize + 'px';
+}
+
 function animate(timeStamp) {
     const timeChange = timeStamp - lastTime;
-    console.log(timeChange)
     lastTime = timeStamp;
     ctx.clearRect(0, 0, canvas1.width, canvas1.height);
     ctx3.clearRect(0, 0, canvas1.width, canvas1.height);
@@ -158,25 +171,32 @@ function animate(timeStamp) {
 
 function winScreen() {
     alert('you win this game')
+    ctx3.clearRect(0, 0, canvas1.width, canvas1.height);
+    ctx3.fillStyle = 'black';
+    ctx3.fillRect(0, 0, canvas1.width, canvas1.height)
+
 }
 
-// function timer(graceTimer, onTimerComplete, game) {
-//     const intervalId = setInterval(() => {
-//         if (graceTimer > 0) {
-//             console.log(`${graceTimer} seconds left!`)
-//             graceTimer --;
-//         } else {
-//             clearInterval(intervalId);
-//             onTimerComplete();
-//             game.gracePeriod = false;
-//         }
-//     }, 1000)
-// }
-
 function gameStart() {
+    background.setAttribute('src', './images/background1.png')
     game.timer();
     buttonPlay.style.display = 'none';
     animate(0);
 }
 
 buttonPlay.addEventListener('click', gameStart);
+
+window.addEventListener('keyup', e => {
+    let x = e.key.toLowerCase();
+    if (x === 'x' && leftText.style.visibility === 'visible') {
+        leftText.style.visibility = 'hidden';
+    } else if (x === 'x' && leftText.style.visibility === 'hidden') {
+        leftText.style.visibility = 'visible';
+    }
+    console.log(leftText.style.visibility)
+})
+
+leftText.style.visibility = 'visible';
+
+window.addEventListener('resize', updateAspectRatio);
+updateAspectRatio();
