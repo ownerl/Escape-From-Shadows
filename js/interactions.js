@@ -18,19 +18,7 @@ export class KeyObject {
         this.x = (this.x / 100) * this.game.width;
         this.y = (this.y / 100) * this.game.height;
     }
-    update(player, color, trees) {
-        // respawn in accessible area
-        trees.forEach((tree) => {
-            if (
-                this.x < tree.x + this.treeLeftOffset + tree.width && // left collision
-                this.x + this.width > tree.x + this.treeRightOffset && // right collision
-                this.y < tree.y + this.treeTopOffset + tree.height && // top collision
-                this.y + this.height > tree.y + this.treeBottomOffset // bottom collision
-                ) {
-                    this.x = 50 + Math.random() * 800;
-                    this.y = 50 + Math.random() * 800;
-                }
-        })
+    update(player, color, keySound) {
         if (
             player.x < this.x + this.width &&
             player.x + player.width > this.x &&
@@ -40,14 +28,13 @@ export class KeyObject {
             this.x = player.x + 25;
             this.y = player.y - 5;
             if (!this.game.keysCollected.includes(color)) {
+                keySound.play();
                 this.game.keysCollected.push(color);
             }
         }
     }
-    render(context, color) {
+    render(context) {
         context.drawImage(this.key, this.x, this.y, this.width, this.height);
-        // context.fillStyle = color;
-        // context.fillRect(this.x, this.y, this.width, this.height);
     }
 }
 
@@ -71,7 +58,7 @@ export class Door {
         this.x = (this.x / 100) * this.game.width;
         this.y = (this.y / 100) * this.game.height;
     }
-    update(player) {
+    update(player, hatch) {
         if (
             this.game.keysCollected.length === 1 && 
             player.x < this.x + this.width &&
@@ -79,6 +66,7 @@ export class Door {
             player.y < this.y + this.height &&
             player.y + player.height > this.y
             ) {
+            hatch.play();
             this.game.win = true;
         }
     }

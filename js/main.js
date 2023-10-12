@@ -6,8 +6,17 @@ import { KeyObject, Door, Obstacle } from './interactions.js';
 
 /* <><><><><><><>         AUDIO         <><><><><><><> */
 const backgroundSounds = new Audio('./audio/nightsounds.wav');
-const footsteps = new Audio('./audio/running.wav');
-
+backgroundSounds.volume = 0.4;
+const footsteps = new Audio('./audio/footsteps.wav');
+footsteps.volume = 0.3;
+const growl = new Audio('./audio/growl.wav');
+growl.volume = 0.7;
+const keySound = new Audio('./audio/tink.wav');
+keySound.volume = 0.7;
+const hatch = new Audio('./audio/hatch.wav');
+hatch.volume = 0.7;
+const dead = new Audio('./audio/dead.wav');
+dead.volume = 0.7;
 
 /* <><><><><><><>      DOM SELECTORS    <><><><><><><> */
 const canvas1 = document.querySelector('#canvas1');
@@ -19,6 +28,7 @@ const buttonRestart = document.querySelector('#restart');
 const background = document.querySelector('#background');
 const leftText = document.querySelector('#leftText');
 const endgame = document.querySelector('#endgame');
+const endMessage = document.querySelector('#endMessage');
 /* <><><><><><><>      CANVAS SETUP     <><><><><><><> */
 // Game area
 const ctx = canvas1.getContext('2d');
@@ -50,11 +60,19 @@ class Game {
         this.maxTrees = 60;
         this.treeCount = 0;
         this.enemies = [this.enemy];
-        this.greenKey = new KeyObject(this);
+        this.goldenKey = new KeyObject(this);
         this.escape = new Door(this);
         this.keysCollected = [];
         this.playerIsAlive = true;
         this.win = false;
+    }
+
+    footsteps() {
+        if (this.input.keysPressed.length > 0 && this.playerIsAlive === true) {
+            footsteps.play();
+        } else {
+            footsteps.pause();
+        }
     }
 
     timer() {
@@ -65,6 +83,7 @@ class Game {
                 this.graceTimer --;
             } 
             if (this.graceTimer <= 0) {
+                growl.play();
                 clearInterval(intervalID);
                 this.gracePeriod = false;
             }
@@ -112,8 +131,8 @@ class Game {
         if (this.gracePeriod === false) {
             this.enemies.forEach((baddie) => baddie.update(this.player, this.input));
         }
-        this.greenKey.update(this.player, 'green', this.trees);
-        this.escape.update(this.player);
+        this.goldenKey.update(this.player, 'gold', keySound);
+        this.escape.update(this.player, hatch);
     }
     render(context, context2, context3, context1) {
         this.escape.render(context);
@@ -123,12 +142,12 @@ class Game {
         if (this.gracePeriod === false) {
             this.enemies.forEach((baddie) => baddie.render(context, context3));
         }
-        this.greenKey.render(context, 'green');
+        this.goldenKey.render(context);
         this.trees.forEach((tree) => tree.render(context, this.player));
     }
     collision() {
         if (this.gracePeriod === false) {
-            this.player.collision();
+            this.player.collision(dead);
         }
     }
 
@@ -156,26 +175,41 @@ function animate(timeStamp) {
     game.makeTrees();
     game.removeTrees();
     game.update(timeChange);
+    game.footsteps();
     game.render(ctx, ctx2, ctx3, ctx1);
     game.collision();
-    if (!game.win) {
+    if (game.win === false && game.playerIsAlive === true) {
         requestAnimationFrame(animate);
-    } else if (game.win) {
+    } else if (game.win === true) {
         winScreen();
+    }
+    if (game.playerIsAlive === false) {
+        badEnd();
     }
 }
 
 function winScreen() {
-    alert('you win this game')
     ctx3.clearRect(0, 0, canvas1.width, canvas1.height);
     ctx3.fillStyle = 'black';
     ctx3.fillRect(0, 0, canvas1.width, canvas1.height)
+    endMessage.innerHTML = 'You have successfully escaped!'
+    endMessage.style.color = 'rgb(118, 191, 0)';
     endgame.style.visibility = 'visible';
 
 }
 
+function badEnd() {
+    ctx3.clearRect(0, 0, canvas1.width, canvas1.height);
+    ctx3.fillStyle = 'black';
+    ctx3.fillRect(0, 0, canvas1.width, canvas1.height)
+    endMessage.innerHTML = 'You have died.'
+    endMessage.style.color = 'rgb(200, 0, 0)';
+    endgame.style.visibility = 'visible';
+}
+
 function gameStart() {
     background.setAttribute('src', './images/background1.png')
+    playBackgroundSounds();
     game.timer();
     buttonPlay.style.visibility = 'hidden';
     animate(0);
@@ -191,9 +225,13 @@ window.addEventListener('keyup', e => {
     console.log(leftText.style.visibility)
 })
 
+function playBackgroundSounds() {
+    backgroundSounds.play();
+    setTimeout(playBackgroundSounds, 335000);
+}
+
 window.addEventListener('resize', updateAspectRatio);
 buttonPlay.addEventListener('click', gameStart);
 buttonRestart.addEventListener('click', () => location.reload());
 leftText.style.visibility = 'visible';
-
 updateAspectRatio();

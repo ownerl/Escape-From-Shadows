@@ -83,12 +83,11 @@ button:hover {
 #endgame {
     position: absolute;
     visibility: hidden;
-    color: rgb(118, 191, 0);
     z-index: 55;
 }
 
 #restart {
-    color: rgb(161, 8, 8);
+    color: rgb(189, 62, 62);
 }
 
 @media screen and (max-width: 800px) {

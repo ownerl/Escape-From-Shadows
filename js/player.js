@@ -176,7 +176,7 @@ export class Player {
         context1.fillRect(0, 0, this.game.width, this.game.height);
 
     }
-    collision() {
+    collision(dead) {
         this.game.enemies.forEach(enemy => {
             if (
                 enemy.x < this.x + this.width &&
@@ -184,7 +184,10 @@ export class Player {
                 enemy.y < this.y + this.height &&
                 enemy.y + enemy.height > this.y
             ) {
-                this.game.playerIsAlive = false;
+                if (this.game.playerIsAlive === true) {
+                    dead.play();
+                    this.game.playerIsAlive = false;
+                }
             }
         })
     }
