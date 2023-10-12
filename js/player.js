@@ -38,8 +38,8 @@ export class Player {
 
         // Translating registered key inputs to movement
         const diagonalMultiplier = 0.7;
-        const speed = 0.7;
-        const slowSpeed = 0.2
+        const speed = 0.8;
+        const slowSpeed = 0.15;
         const treeTopOffset = (14.5 / 100) * this.game.height;
         const treeBottomOffset = (14.0 / 100) * this.game.height;
         const treeRightOffset = (5 / 100) * this.game.width;

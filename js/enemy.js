@@ -12,7 +12,7 @@ export class Demon {
             this.x = this.game.width + 50;
         }
         this.y = Math.random();
-        this.speedEnemy = 0.35;
+        this.speedEnemy = 0.4;
         this.demon = new Image();
         this.demon.src = './images/demon.png'
         this.eyes = new Image();

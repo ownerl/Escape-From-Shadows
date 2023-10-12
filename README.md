@@ -1,4 +1,4 @@
-# Escape From Shadows
+# Escape The Forest
 Take the role of a hapless adventurer lost in the shadowy woods. Explore your dark surroundings to find a way to escape these woods while avoiding the danger lurking in the dark.
 
 Play it here: https://ownerl.github.io/Escape-From-Shadows/
@@ -15,7 +15,7 @@ After the grace period, an enemy will spawn somewhere on the map (a set minimum 
 
 ## Wireframes
 
-![Escape From Shadows Wireframe Mockup](images/wireframe.png)
+![Escape The Forest Wireframe Mockup](images/wireframe.png)
 
 ## MVP Goals
 - Complete map
