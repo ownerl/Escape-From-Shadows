@@ -29,6 +29,7 @@ const background = document.querySelector('#background');
 const leftText = document.querySelector('#leftText');
 const endgame = document.querySelector('#endgame');
 const endMessage = document.querySelector('#endMessage');
+
 /* <><><><><><><>      CANVAS SETUP     <><><><><><><> */
 // Game area
 const ctx = canvas1.getContext('2d');
@@ -46,6 +47,7 @@ canvas2.width = canvas1.width;
 canvas2.height = canvas1.height;
 canvas3.width = canvas1.width;
 canvas3.height = canvas1.height;
+
 /* <><><><><><><>        GAME           <><><><><><><> */
 class Game {
     constructor(width, height) {
@@ -66,7 +68,6 @@ class Game {
         this.playerIsAlive = true;
         this.win = false;
     }
-
     footsteps() {
         if (
             (this.input.keysPressed.includes('w') ||
@@ -79,12 +80,10 @@ class Game {
             footsteps.pause();
         }
     }
-
     timer() {
-        console.log('running!')
         const intervalID = setInterval(() => {
             if (this.graceTimer > 0) {
-                console.log(`${this.graceTimer} seconds left!`)
+                console.log(`${this.graceTimer} seconds left before enemy spawn.`)
                 this.graceTimer --;
             } 
             if (this.graceTimer <= 0) {
@@ -94,7 +93,6 @@ class Game {
             }
         }, 1000);
     }
-
     makeTrees() {
         if (this.treeCount < this.maxTrees) {
             //console.log('tree creataed!')
@@ -124,12 +122,7 @@ class Game {
             }
         }
     }
-
     update(timeChange) {
-        // delete overlapping trees for player mobility
-        this.trees.forEach((tree) => tree.update(this.trees));
-        //console.log(this.trees)
-        
         if (this.playerIsAlive) {
             this.player.update(this.input.keysPressed, this.trees, timeChange);
         }
@@ -155,11 +148,10 @@ class Game {
             this.player.collision(dead);
         }
     }
-
 }
+
 const game = new Game(canvas1.width, canvas1.height);
 
-let lastTime = 0;
 /* <><><><><><><>   OUTSIDE FUNCTIONS   <><><><><><><> */
 function updateAspectRatio() {
     const centralContent = document.getElementById('centralContent');
@@ -170,6 +162,7 @@ function updateAspectRatio() {
     centralContent.style.height = maxSize + 'px';
 }
 
+let lastTime = 0;
 function animate(timeStamp) {
     const timeChange = timeStamp - lastTime;
     lastTime = timeStamp;

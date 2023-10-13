@@ -72,8 +72,6 @@ export class Door {
     }
     render(context) {
         context.drawImage(this.door, this.x, this.y, this.width, this.height);
-        // context.fillStyle = 'purple';
-        // context.fillRect(this.x, this.y, this.width, this.height);
     }
 }
 
@@ -91,8 +89,6 @@ export class Obstacle {
         this.height = (this.height / 100) * this.gameHeight;
         this.x = (this.x / 100) * this.gameWidth;
         this.y = (this.y / 100) * this.gameHeight;
-    }
-    update () {
     }
     render(context, player) {
         if (

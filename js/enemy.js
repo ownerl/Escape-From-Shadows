@@ -54,10 +54,7 @@ export class Demon {
         }
     }
     render(context, context3) {
-        // context.fillStyle = 'red';
-        // context.fillRect(this.x, this.y, this.width, this.height);
         context.drawImage(this.demon, this.x, this.y, this.width, this.height);
-        // let eyes = [(3 / 100) * this.game.width, (4 / 100) * this.game.height];
         context3.drawImage(this.eyes, this.x, this.y, this.width, this.height);
     }
 }
