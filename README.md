@@ -1,4 +1,5 @@
-# ![Escape The Forest Title](images/Title.png)
+#
+![Escape The Forest Title](images/Title.png)
 Take the role of a hapless adventurer lost in the shadowy woods. Explore your dark surroundings to find a way to escape these woods while avoiding the danger lurking in the dark.
 
 Play it here: https://ownerl.github.io/Escape-The-Forest/
