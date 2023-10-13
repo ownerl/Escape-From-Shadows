@@ -6,7 +6,7 @@ Take the role of a hapless adventurer lost in the shadowy woods. Explore your da
 Play it here: https://ownerl.github.io/Escape-The-Forest/
 
 ## About
-Escape The Forest is a top down 2D exploration and survival game. The playable area (refered to as map) is a square area enshrouded in shadows. The player must explore the map to find a key that can open an escape hatch somewhere on the map. The map is also filled with trees that cumulatively slow down the player. The trees, hatch, and key are all randomly generated so each playthrough is slightly different. 
+Escape The Forest is a top down 2D exploration and survival game made using vanilla Javascript. The playable area (refered to as map) is a square area enshrouded in shadows. The player must explore the map to find a key that can open an escape hatch somewhere on the map. The map is also filled with trees that cumulatively slow down the player. The trees, hatch, and key are all randomly generated so each playthrough is slightly different. 
 
 The player also has access to a lantern that can light up their surroundings in a short radius. However, after a certain grace period, an enemy will spawn outside the map and chase after the player if they are lit up. The player can choose to turn off their lantern at which point the enemy will merely approach the player's last known location.
 
