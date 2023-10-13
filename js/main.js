@@ -73,7 +73,7 @@ class Game {
             (this.input.keysPressed.includes('w') ||
             this.input.keysPressed.includes('a') ||
             this.input.keysPressed.includes('s') ||
-            this.input.keysPressed.includes('d') ) &&
+            this.input.keysPressed.includes('d')) &&
             this.playerIsAlive === true) {
             footsteps.play();
         } else {
