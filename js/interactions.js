@@ -105,10 +105,6 @@ export class Obstacle {
             context.globalAlpha = 0.3;
             context.drawImage(this.trees, this.x, this.y, this.width + (0.1 * this.gameWidth), this.height + (0.16 * this.gameHeight));
             context.restore();
-            
-            context.fillRect(this.x, this.y, 5, 5)
-            context.fillRect(this.x + this.width + (0.1 * this.gameWidth) - 5, this.y, 5, 5)
-
         } else {
             context.drawImage(this.trees, this.x, this.y, this.width + (0.1 * this.gameWidth), this.height + (0.16 * this.gameHeight));
         }

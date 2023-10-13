@@ -51,7 +51,7 @@ class Game {
     constructor(width, height) {
         this.width = width;
         this.height = height;
-        this.graceTimer = 5;
+        this.graceTimer = 9;
         this.gracePeriod = true;
         this.player = new Player(this);
         this.input = new InputHandler(this);
@@ -68,7 +68,12 @@ class Game {
     }
 
     footsteps() {
-        if (this.input.keysPressed.length > 0 && this.playerIsAlive === true) {
+        if (
+            (this.input.keysPressed.includes('w') ||
+            this.input.keysPressed.includes('a') ||
+            this.input.keysPressed.includes('s') ||
+            this.input.keysPressed.includes('d') ) &&
+            this.playerIsAlive === true) {
             footsteps.play();
         } else {
             footsteps.pause();
