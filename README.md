@@ -43,7 +43,7 @@ Credit to Freesound.org for sound effects used in the game, as well as Magic of 
 
 Special thanks to Franks Laboratory on YouTube. His class based approach to modular game development helped me keep my code organized and optimized for future improvements and expansions. For example, adding new enemy types, keys, or winning conditions is fairly straightforward (if slightly tedious).
 
-Big thanks to Tom Kolsrud for assisting me in some bug fixes and ChatGPT for helping explain to me certain concepts and why they did or did not work.
+Big thanks to Tom Kolsrud for assisting me in fixing some buggy HTML elements and ChatGPT for helping explain to me certain concepts and why they did or did not work.
 
 Additional thanks to Leah Livingston and Kylie Facison for playtesting my game for balance tweaks and changes.
 
