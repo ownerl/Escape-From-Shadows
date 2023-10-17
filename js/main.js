@@ -190,7 +190,7 @@ function winScreen() {
     ctx3.clearRect(0, 0, canvas1.width, canvas1.height);
     ctx3.fillStyle = 'black';
     ctx3.fillRect(0, 0, canvas1.width, canvas1.height)
-    endMessage.innerHTML = 'You have successfully escaped!'
+    endMessage.innerText = 'You have successfully escaped!'
     endMessage.style.color = 'rgb(118, 191, 0)';
     endgame.style.visibility = 'visible';
 
@@ -200,7 +200,7 @@ function badEnd() {
     ctx3.clearRect(0, 0, canvas1.width, canvas1.height);
     ctx3.fillStyle = 'black';
     ctx3.fillRect(0, 0, canvas1.width, canvas1.height)
-    endMessage.innerHTML = 'You have died.'
+    endMessage.innerText = 'You have died.'
     endMessage.style.color = 'rgb(200, 0, 0)';
     endgame.style.visibility = 'visible';
 }
